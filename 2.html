@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>To do list</h1>
+    <br>
+    <h4>Nueva tarea</h4>
+    <input type="text">
+    <button>Agregar</button>
+    <section>
+        <span class="span1">
+            <ul></ul>
+            <p>Total de tareas: <span id="total"></span></p>
+            <p>Realizadas:</p>
+        </span></span>
+        <span class="span2">
+            <p>Id:</p>
+            <p>Tarea</p>
+        </span>
+    </section>
+    <script>
+        //checked
+        const lista = document.querySelector("ul")
+        const input = document.querySelector("input")
+        const btn = document.querySelector("button")
+        const tareas = []
+        const cantidad = document.querySelector("#total")
+
+
+        var total = 0
+
+        btn.addEventListener("click", () => {
+            let nuevaTarea = {id: Date.now(), nombre: input.value, realizada:false };
+            tareas.push(nuevaTarea);
+            input.value = "";
+            let html = "";
+            for (let tarea of tareas) {
+                html += `<li>${tarea.nombre} <button onclick="borrarTarea('${tarea.id}')">x</button><input type='checkbox'></li>`;
+            }
+            lista.innerHTML = html;
+            total++;
+            cantidad.innerHTML = total
+
+        })
+        
+        function borrarTarea (id) {
+            const index = tareas.findIndex((ele) => ele.id == id);
+            tareas.splice(index,1);
+            let html="";
+            for (tarea of tareas){
+                html += `<li>${tarea.nombre} <button onclick="borrarTarea('${tarea.id}')">x</button><input type= 'checkbox'></li>`
+            }
+            lista.innerHTML = html
+            cantidad.innerHTML = total -1
+        }
+        function tareaLista (id) {
+            const index = tareas.findIndex((ele) => ele.id == id);
+            tareas.splice(index,1);
+            let html="";
+            for (tarea of tareas){
+                html += `<li>${tarea.nombre} <button onclick="borrarTarea('${tarea.id}')">x</button><button onclick= "tarealista(${tarea.realizada})">Tarea lista</button></li>`
+            }
+            lista.innerHTML = html
+        }
+    
+
+    </script>
+</body>
+
+</html>
